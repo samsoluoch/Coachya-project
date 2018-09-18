@@ -18,7 +18,7 @@ class Coach(UserMixin,db.Model):
     username = db.Column(db.String(255), index=True)
     email = db.Column(db.String(255), unique=True, index=True)
     password_hash = db.Column(db.String(255))
-    team = db.relationship('Post', backref='coach', lazy="dynamic")
+    team = db.relationship('Team', backref='user', lazy="dynamic")
 
     @property
     def password(self):
