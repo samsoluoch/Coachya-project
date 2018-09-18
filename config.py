@@ -30,7 +30,7 @@ class TestConfig(Config):
     SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://MacbookAir:sam123@localhost/coach'
     pass
 class DevConfig(Config):
-    # SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://MacbookAir:sam123@localhost/coach'
+    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://MacbookAir:sam123@localhost/coach'
 
     DEBUG = True
 
