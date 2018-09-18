@@ -3,22 +3,24 @@ from flask_login import UserMixin
 from . import login_manager
 from datetime import datetime
 from . import db
+from app
 
 @login_manager.user_loader
 def load_user(user_id):
     return Coach.query.get(int(user_id))
 
-class Coach(UserMixin,db.Model):
-    __tablename__ = 'coaches'
-    '''
-    This is Coaches class that defines the object Coach
-    '''
+# class Coach(UserMixin, db.Model):
+#         __tablename__ = 'coaches'
+#         id = db.Column(db.Integer, primary_key=True)
+#         username = db.Column(db.String(255), index=True)
+#         email = db.Column(db.String(255), unique=True, index=True)
+#         bio = db.Column(db.String(255))
+#         profile_pic_pah = db.Column(db.String())
+#         pass_secure = db.tColumn(db.String(255))
+#         # creating relationship between coach and team,One Coach can have many teams
+#         team = db.relationship("Team", backref="coach", lazy="dynamic")
 
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(255), index=True)
-    email = db.Column(db.String(255), unique=True, index=True)
-    password_hash = db.Column(db.String(255))
-    team = db.relationship('Team', backref='user', lazy="dynamic")
+
 
     @property
     def password(self):
