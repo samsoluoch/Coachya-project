@@ -1,8 +1,8 @@
-from app import create_app
-from flask_script import Manager, Shell, Server
+
 # from app.models import User
 # from flask_migrate import Migrate, MigrateCommand
-
+from app import create_app
+from flask_script import Manager,Server
 # Creating app instance
 # app = create_app('production')
 app = create_app('development')
