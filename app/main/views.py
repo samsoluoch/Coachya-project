@@ -1,9 +1,9 @@
 from flask import render_template, request, redirect, url_for, abort, flash
 from . import main
 from flask_login import login_required, current_user
-# from .. import db
-from ..models import Profile
-# from app import login_manager
+from .. import db
+from ..models import Profile,User
+from app import login_manager
 from .forms import ProfileForm
 
 @main.route('/')
@@ -28,12 +28,13 @@ def index():
 
 
 @main.route('/profile/add',methods = ['GET','POST'])
-# @login_required
+@login_required
 def new_profile():
     '''
     View pitch function that returns the pitch page and data
     '''
     form = ProfileForm()
+
 
     if form.validate_on_submit():
         teamname = form.teamname.data
@@ -46,4 +47,32 @@ def new_profile():
         flash('Profile has been created!', 'success')
         return redirect(url_for('main.home'))
 
-    return render_template('new_profile.html', profile_form = form)
+    return render_template('profile/profile.html', profile_form = form)
+
+@main.route('/user')
+def profile():
+    # usr = User.query.filter_by(username = uname).first()
+    user= current_user
+
+    if user is None:
+        abort(404)
+
+    return render_template("profile/profile.html", user = user)
+@main.route('/user/<uname>/update',methods = ['GET','POST'])
+@login_required
+def update_profile(uname):
+    user = User.query.filter_by(username = uname).first()
+    if user is None:
+        abort(404)
+
+    form = UpdateProfile()
+
+    if form.validate_on_submit():
+        user.bio = form.bio.data
+
+        db.session.add(user)
+        db.session.commit()
+
+        return redirect(url_for('.profile',uname=user.username))
+
+    return render_template('profile/update.html',form =form)
